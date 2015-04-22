@@ -1,0 +1,7 @@
+﻿dungeon crawler
+inventory
+rooms
+random content
+keep 2 rooms in memory
+go back to 1 room
+enter new room and reset another
