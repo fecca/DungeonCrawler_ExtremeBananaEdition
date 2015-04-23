@@ -57,6 +57,7 @@ public class ObjectPool : Singleton<ObjectPool>
             for (int i = 0; i < worldItem.MaxAmountInWorld; i++)
             {
                 GameObject obj = Instantiate(worldItem.Prefab) as GameObject;
+                obj.transform.SetParent(transform);
                 obj.SetActive(false);
                 list.Add(obj);
             }

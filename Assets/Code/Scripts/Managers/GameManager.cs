@@ -7,30 +7,40 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        CreateWorld();
+        CreateRooms();
         StartGame();
         //MockItems();
     }
 
-    private void CreateWorld()
+    public void OpenDoor(Door door)
     {
-        WorldManager.Instance.CreateWorld();
+        WorldRoom newWorldRoom = WorldManager.Instance.SpawnRoom(door.LeadsTo);
+        SpawnPlayer(newWorldRoom);
+    }
+
+    private void CreateRooms()
+    {
+        RoomManager.Instance.CreateRooms();
     }
     private void StartGame()
     {
-        RoomManager.Instance.SpawnRoom(0);
-        SpawnPlayer(Vector3.up);
+        WorldRoom worldRoom = WorldManager.Instance.SpawnRoom(1);
+        SpawnPlayer(worldRoom);
     }
-    private void SpawnPlayer(Vector3 position)
+    private void SpawnPlayer(WorldRoom worldRoom)
     {
-        if (GameObject.FindGameObjectWithTag("Player") == null)
+        if (worldRoom != null)
         {
-            GameObject playerObj = Instantiate(playerPrefab) as GameObject;
-            playerObj.transform.position = position;
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj == null)
+            {
+                playerObj = Instantiate(playerPrefab) as GameObject;
+            }
+            playerObj.transform.position = worldRoom.transform.position + Vector3.up;
         }
         else
         {
-            Debug.LogWarning("A player already exists in the scene. No new player was spawned.");
+            Debug.LogWarning("No room with that room number registered.");
         }
     }
     private void MockItems()

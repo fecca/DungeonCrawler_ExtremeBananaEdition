@@ -1,21 +1,31 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class RoomManager : Singleton<RoomManager>
 {
     [SerializeField]
-    private GameObject roomPrefab = null;
-    [SerializeField]
-    private Text roomNumberText = null;
+    private int numberOfRooms = 100;
 
-    public void SpawnRoom(int roomNumber)
+    private Dictionary<int, Room> rooms = new Dictionary<int, Room>();
+
+    public void CreateRooms()
     {
-        Room room = WorldManager.Instance.GetRoom(roomNumber);
-
-        if (room != null)
+        for (int i = 1; i <= numberOfRooms; i++)
         {
-            GameObject roomObj = Instantiate(roomPrefab) as GameObject;
-            WorldRoom worldRoom = roomObj.GetComponent<WorldRoom>();
+            rooms.Add(i, new Room(i));
         }
+    }
+    public Room GetRoom(int roomNumber)
+    {
+        if (rooms.ContainsKey(roomNumber))
+        {
+            return rooms[roomNumber];
+        }
+
+        return null;
+    }
+    public bool RoomExists(int roomNumber)
+    {
+        return rooms.ContainsKey(roomNumber);
     }
 }

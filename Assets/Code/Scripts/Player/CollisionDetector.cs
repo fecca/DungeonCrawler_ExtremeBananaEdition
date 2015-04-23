@@ -11,7 +11,15 @@ public class CollisionDetector : MonoBehaviour
             if (InventoryManager.Instance.AddItemToInventory(worldItem.Item))
             {
                 WorldManager.Instance.RemoveItemFormWorld(worldItem);
+
+                return;
             }
+        }
+
+        Door door = other.GetComponent<Door>();
+        if (door != null)
+        {
+            GameManager.Instance.OpenDoor(door);
         }
     }
 }

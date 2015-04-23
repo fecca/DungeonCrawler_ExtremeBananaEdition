@@ -1,18 +1,38 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class WorldManager : Singleton<WorldManager>
 {
     [SerializeField]
-    private int numberOfRooms = 100;
+    private GameObject roomPrefab = null;
 
-    private Dictionary<int, Room> rooms = new Dictionary<int, Room>();
+    public WorldRoom CurrentWorldRoom { get; private set; }
+    public WorldRoom PreviousWorldRoom { get; private set; }
 
-    public void CreateWorld()
+    public WorldRoom SpawnRoom(int roomNumber)
     {
-        for (int i = 0; i < numberOfRooms; i++)
+        Room room = RoomManager.Instance.GetRoom(roomNumber);
+
+        if (room != null)
         {
-            rooms.Add(i, new Room());
+            GameObject roomObj = Instantiate(roomPrefab) as GameObject;
+            WorldRoom worldRoom = roomObj.GetComponent<WorldRoom>();
+            worldRoom.Initialise(room);
+
+            PreviousWorldRoom = CurrentWorldRoom;
+            CurrentWorldRoom = worldRoom;
+            
+            DespawnPreviousRoom();
+
+            return worldRoom;
+        }
+
+        return null;
+    }
+    public void DespawnPreviousRoom()
+    {
+        if (PreviousWorldRoom != null)
+        {
+            Destroy(PreviousWorldRoom.gameObject);
         }
     }
     public WorldItem AddItemToWorld(ItemType type, Vector3 position)
@@ -40,16 +60,5 @@ public class WorldManager : Singleton<WorldManager>
     public void RemoveItemFormWorld(WorldItem worldItem)
     {
         ObjectPool.Instance.ReturnObject(worldItem.gameObject, worldItem.Item.Type);
-    }
-    public Room GetRoom(int roomNumber)
-    {
-        if (rooms.ContainsKey(roomNumber))
-        {
-            return rooms[roomNumber];
-        }
-
-        Debug.LogWarning("No Room with that room number registered.");
-
-        return null;
     }
 }
