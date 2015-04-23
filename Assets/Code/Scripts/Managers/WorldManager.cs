@@ -14,13 +14,13 @@ public class WorldManager : Singleton<WorldManager>
 
         if (room != null)
         {
-            GameObject roomObj = Instantiate(roomPrefab) as GameObject;
-            WorldRoom worldRoom = roomObj.GetComponent<WorldRoom>();
+            GameObject worldRoomObj = Instantiate(roomPrefab) as GameObject;
+            WorldRoom worldRoom = worldRoomObj.GetComponent<WorldRoom>();
             worldRoom.Initialise(room);
 
             PreviousWorldRoom = CurrentWorldRoom;
             CurrentWorldRoom = worldRoom;
-            
+
             DespawnPreviousRoom();
 
             return worldRoom;

@@ -2,7 +2,7 @@
 using System;
 
 [Serializable]
-public class WorldItemInformation
+public class ItemInformation
 {
     [SerializeField]
     private ItemType type = ItemType.NONE;
@@ -10,6 +10,8 @@ public class WorldItemInformation
     private GameObject prefab = null;
     [SerializeField]
     private int maxAmountInWorld = 0;
+    [SerializeField]
+    private Sprite sprite = null;
 
     public ItemType Type
     {
@@ -22,5 +24,9 @@ public class WorldItemInformation
     public int MaxAmountInWorld
     {
         get { return maxAmountInWorld; }
+    }
+    public Sprite Sprite
+    {
+        get { return sprite; }
     }
 }

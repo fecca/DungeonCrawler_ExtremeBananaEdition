@@ -28,18 +28,21 @@ public class WorldRoom : MonoBehaviour
             leftDoor.LeadsTo = potentialLeftRoomNumber;
             leftDoor.gameObject.SetActive(true);
         }
+
         int potentialRightRoomNumber = Room.RoomNumber + 3;
         if (RoomManager.Instance.RoomExists(potentialRightRoomNumber))
         {
             rightDoor.LeadsTo = potentialRightRoomNumber;
             rightDoor.gameObject.SetActive(true);
         }
+
         int potentialForwardRoomNumber = Room.RoomNumber + 5;
         if (RoomManager.Instance.RoomExists(potentialForwardRoomNumber))
         {
             forwardDoor.LeadsTo = potentialForwardRoomNumber;
             forwardDoor.gameObject.SetActive(true);
         }
+
         int potentialBackRoomNumber = Room.RoomNumber - 7;
         if (RoomManager.Instance.RoomExists(potentialBackRoomNumber))
         {

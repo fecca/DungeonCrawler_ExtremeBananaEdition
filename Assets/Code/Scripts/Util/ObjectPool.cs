@@ -45,8 +45,8 @@ public class ObjectPool : Singleton<ObjectPool>
     {
         ItemManager mapper = GameObject.FindObjectOfType<ItemManager>();
 
-        List<WorldItemInformation> worldItemInformation = mapper.GetWorldItemInformation();
-        foreach (WorldItemInformation worldItem in worldItemInformation)
+        List<ItemInformation> worldItemInformation = mapper.GetItemInformation();
+        foreach (ItemInformation worldItem in worldItemInformation)
         {
             if (objects.ContainsKey(worldItem.Type))
             {
