@@ -2,6 +2,16 @@
 inventory
 rooms
 random content
-keep 2 rooms in memory
-go back to 1 room
+keep X rooms in memory
+go back to X room
 enter new room and reset another
+npc´s
+mark rooms with numnber
+boss in specific room
+3 choices when going to a new room with different levels of difficulty
+progress towards boss
+pattern for room numbers mapped to difficulty and proximity to boss
+go left to decrement room number by 2
+go right to increment room number by 3
+go forward to increment room number by 5
+go backward to decrement room number by 7

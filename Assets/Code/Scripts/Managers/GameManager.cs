@@ -7,8 +7,34 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        SpawnPlayer(Vector3.up);
+        CreateWorld();
+        StartGame();
+        //MockItems();
+    }
 
+    private void CreateWorld()
+    {
+        WorldManager.Instance.CreateWorld();
+    }
+    private void StartGame()
+    {
+        RoomManager.Instance.SpawnRoom(0);
+        SpawnPlayer(Vector3.up);
+    }
+    private void SpawnPlayer(Vector3 position)
+    {
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            GameObject playerObj = Instantiate(playerPrefab) as GameObject;
+            playerObj.transform.position = position;
+        }
+        else
+        {
+            Debug.LogWarning("A player already exists in the scene. No new player was spawned.");
+        }
+    }
+    private void MockItems()
+    {
         // Mock world items //
         WorldItem axe = WorldManager.Instance.AddItemToWorld(ItemType.Axe, new Vector3(-4, 0, 0));
         WorldItem hammer = WorldManager.Instance.AddItemToWorld(ItemType.Hammer, new Vector3(-2, 0, 0));
@@ -24,28 +50,15 @@ public class GameManager : Singleton<GameManager>
         WorldManager.Instance.AddItemToWorld(ItemType.Sword, new Vector3(-2, 0, -2));
 
         // Mock inventory items //
-        //InventoryManager.Instance.AddItemToInventory(axe.Item);
-        //InventoryManager.Instance.AddItemToInventory(hammer.Item);
-        //InventoryManager.Instance.AddItemToInventory(sword.Item);
-        //InventoryManager.Instance.AddItemToInventory(ItemType.Hammer);
-        //InventoryManager.Instance.AddItemToInventory(ItemType.Hammer);
-        //InventoryManager.Instance.AddItemToInventory(ItemType.Axe);
-        //InventoryManager.Instance.AddItemToInventory(ItemType.Sword);
-        //InventoryManager.Instance.AddItemToInventory(ItemType.Axe);
-        //InventoryManager.Instance.AddItemToInventory(ItemType.Hammer);
-        //InventoryManager.Instance.AddItemToInventory(ItemType.Hammer);
-    }
-
-    public void SpawnPlayer(Vector3 position)
-    {
-        if (GameObject.FindGameObjectWithTag("Player") == null)
-        {
-            GameObject playerObj = Instantiate(playerPrefab) as GameObject;
-            playerObj.transform.position = position;
-        }
-        else
-        {
-            Debug.LogWarning("A player already exists in the scene. No new player was spawned.");
-        }
+        InventoryManager.Instance.AddItemToInventory(axe.Item);
+        InventoryManager.Instance.AddItemToInventory(hammer.Item);
+        InventoryManager.Instance.AddItemToInventory(sword.Item);
+        InventoryManager.Instance.AddItemToInventory(ItemType.Hammer);
+        InventoryManager.Instance.AddItemToInventory(ItemType.Hammer);
+        InventoryManager.Instance.AddItemToInventory(ItemType.Axe);
+        InventoryManager.Instance.AddItemToInventory(ItemType.Sword);
+        InventoryManager.Instance.AddItemToInventory(ItemType.Axe);
+        InventoryManager.Instance.AddItemToInventory(ItemType.Hammer);
+        InventoryManager.Instance.AddItemToInventory(ItemType.Hammer);
     }
 }
