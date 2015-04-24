@@ -8,6 +8,17 @@ public class GameManager : Singleton<GameManager>
         StartGame();
         MockData();
     }
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.I))
+        {
+            InventoryManager.Instance.ToggleInventory(PlayerManager.Instance.Player);
+        }
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            InventoryManager.Instance.ToggleInventory(GameObject.FindObjectOfType<Skeleton>());
+        }
+    }
 
     public void OpenDoor(Door door)
     {
@@ -30,8 +41,6 @@ public class GameManager : Singleton<GameManager>
         PlayerManager.Instance.GiveItemToPlayer(axe);
         Item hammer = ItemGenerator.GenerateItem(ItemType.Hammer);
         PlayerManager.Instance.GiveItemToPlayer(hammer);
-        //Item sword = ItemGenerator.GenerateItem(ItemType.Sword);
-        //PlayerManager.Instance.GiveItemToPlayer(sword);
 
         EnemyManager.Instance.SpawnEnemy(EnemyType.Skeleton);
     }

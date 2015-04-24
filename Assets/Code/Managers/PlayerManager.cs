@@ -33,9 +33,6 @@ public class PlayerManager : Singleton<PlayerManager>
     }
     public void GiveItemToPlayer(Item item)
     {
-        if (InventoryManager.Instance.AddItemToInventory(item))
-        {
-            Player.GiveItem(item);
-        }
+        Player.GiveItem(item);
     }
 }

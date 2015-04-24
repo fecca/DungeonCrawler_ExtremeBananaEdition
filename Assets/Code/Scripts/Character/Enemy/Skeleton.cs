@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Skeleton : Character
+public class Skeleton : Enemy
 {
     void Start()
     {

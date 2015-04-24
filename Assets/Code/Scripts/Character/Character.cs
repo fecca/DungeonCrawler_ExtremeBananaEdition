@@ -14,11 +14,6 @@ public abstract class Character : MonoBehaviour
     {
         inventory.AddItem(item);
     }
-    public void GiveItem(ItemType type)
-    {
-        Item item = ItemGenerator.GenerateItem(type);
-        GiveItem(item);
-    }
     public List<Item> GetItems()
     {
         return inventory.GetItems();
