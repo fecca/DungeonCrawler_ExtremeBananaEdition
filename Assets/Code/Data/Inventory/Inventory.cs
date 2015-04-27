@@ -3,15 +3,40 @@
 public class Inventory
 {
     private List<Item> items;
+    private int space;
+    private int spaceUsed = 0;
 
-    public Inventory()
+    public Inventory(int space)
     {
         items = new List<Item>();
+        this.space = space;
     }
 
-    public void AddItem(Item item)
+    public bool AddItem(Item item)
     {
-        items.Add(item);
+        if (spaceUsed < space)
+        {
+            items.Add(item);
+            ++spaceUsed;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool TakeItem(Item item)
+    {
+        if (spaceUsed < space)
+        {
+            items.Remove(item);
+            --spaceUsed;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     public List<Item> GetItems()
     {

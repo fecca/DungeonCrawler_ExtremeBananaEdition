@@ -2,7 +2,8 @@
 
 public class Skeleton : Enemy
 {
-    void Start()
+    public Skeleton()
+        : base(EnemyType.Skeleton, 6)
     {
         Item item = ItemGenerator.GenerateItem(ItemType.Sword);
         GiveItem(item);

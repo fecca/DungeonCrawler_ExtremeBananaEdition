@@ -1,21 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class Character : MonoBehaviour
+public abstract class Character
 {
-    private Inventory inventory;
+    protected Inventory inventory;
 
-    void Awake()
+    public Character(int inventorySpace)
     {
-        inventory = new Inventory();
+        inventory = new Inventory(inventorySpace);
     }
-
-    public void GiveItem(Item item)
+    public bool GiveItem(Item item)
     {
-        inventory.AddItem(item);
+        return inventory.AddItem(item);
+    }
+    public bool TakeItem(Item item)
+    {
+        return inventory.TakeItem(item);
     }
     public List<Item> GetItems()
     {
         return inventory.GetItems();
+    }
+    public bool CarriesLoot()
+    {
+        return GetItems().Count > 0;
     }
 }

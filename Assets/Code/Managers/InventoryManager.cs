@@ -13,33 +13,56 @@ public class InventoryManager : Singleton<InventoryManager>
     [SerializeField]
     private GameObject[] lootSlots = null;
 
-    public void ToggleInventory(Character character)
+    public Enemy ActiveLootEnemy { get; set; }
+
+    public void ToggleInventory()
     {
-        /// ToDo: Refactor mess
-        if (character is Player)
+        if (inventoryWindow.activeInHierarchy)
         {
-            if (inventoryWindow.activeInHierarchy)
-            {
-                inventoryWindow.SetActive(false);
-            }
-            else
-            {
-                PopulateInventoryWindow(character.GetItems(), inventorySlots);
-                inventoryWindow.SetActive(true);
-            }
+            inventoryWindow.SetActive(false);
         }
-        else if (character is Enemy)
+        else
         {
-            if (lootWindow.activeInHierarchy)
+            PopulatePlayerInventory(PlayerManager.Instance.Player.GetItems());
+            inventoryWindow.SetActive(true);
+        }
+    }
+    public void ToggleLootWindow(WorldEnemy worldEnemy)
+    {
+        Enemy enemy = null;
+        if (worldEnemy != null)
+        {
+            enemy = worldEnemy.Enemy;
+        }
+
+        // Always close the loot window
+        if (lootWindow.activeInHierarchy)
+        {
+            lootWindow.SetActive(false);
+        }
+
+        if (ActiveLootEnemy != enemy)
+        {
+            if (enemy != null && enemy.CarriesLoot())
             {
-                lootWindow.SetActive(false);
-            }
-            else
-            {
-                PopulateInventoryWindow(character.GetItems(), lootSlots);
+                PopulateInventoryWindow(enemy.GetItems(), lootSlots);
                 lootWindow.SetActive(true);
+                ActiveLootEnemy = enemy;
+            }
+            else
+            {
+                ActiveLootEnemy = null;
             }
         }
+        else
+        {
+            ActiveLootEnemy = null;
+        }
+    }
+    public void PopulatePlayerInventory(List<Item> items)
+    {
+        ClearInventory();
+        PopulateInventoryWindow(items, inventorySlots);
     }
 
     private void PopulateInventoryWindow(List<Item> items, GameObject[] slots)
@@ -58,6 +81,19 @@ public class InventoryManager : Singleton<InventoryManager>
             image.sprite = itemSprite;
 
             inventorySlotObj.SetActive(true);
+        }
+    }
+    private void ClearInventory()
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            GameObject inventorySlotObj = inventorySlots[i];
+
+            InventoryItem inventoryItem = inventorySlotObj.GetComponent<InventoryItem>();
+            inventoryItem.Item = null;
+
+            Image image = inventorySlotObj.GetComponent<Image>();
+            image.sprite = null;
         }
     }
 }

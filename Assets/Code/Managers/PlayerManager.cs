@@ -20,10 +20,9 @@ public class PlayerManager : Singleton<PlayerManager>
 
             playerObj.transform.position = worldRoom.transform.position + Vector3.up;
 
-            Player = playerObj.GetComponent<Player>();
             if (Player == null)
             {
-                Debug.LogWarning("No Player script attached to Player object.");
+                Player = new Player();
             }
         }
         else
@@ -31,8 +30,17 @@ public class PlayerManager : Singleton<PlayerManager>
             Debug.LogWarning("No room with that room number registered.");
         }
     }
-    public void GiveItemToPlayer(Item item)
+    public bool GiveItemToPlayer(Item item)
     {
-        Player.GiveItem(item);
+        if (Player.GiveItem(item))
+        {
+            InventoryManager.Instance.PopulatePlayerInventory(Player.GetItems());
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Could not add item to inventory due to lack of space.");
+            return false;
+        }
     }
 }

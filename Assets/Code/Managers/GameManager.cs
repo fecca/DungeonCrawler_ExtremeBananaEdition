@@ -4,20 +4,9 @@ public class GameManager : Singleton<GameManager>
 {
     void Start()
     {
-        CreateRooms();
-        StartGame();
-        MockData();
-    }
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.I))
-        {
-            InventoryManager.Instance.ToggleInventory(PlayerManager.Instance.Player);
-        }
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            InventoryManager.Instance.ToggleInventory(GameObject.FindObjectOfType<Skeleton>());
-        }
+        RoomManager.Instance.CreateRooms();
+        WorldRoom worldRoom = WorldManager.Instance.SpawnRoom(1);
+        PlayerManager.Instance.SpawnPlayer(worldRoom);
     }
 
     public void OpenDoor(Door door)
@@ -25,23 +14,12 @@ public class GameManager : Singleton<GameManager>
         WorldRoom newWorldRoom = WorldManager.Instance.SpawnRoom(door.LeadsTo);
         PlayerManager.Instance.SpawnPlayer(newWorldRoom);
     }
-
-    private void CreateRooms()
+    public void LootItem(InventoryItem inventoryItem)
     {
-        RoomManager.Instance.CreateRooms();
-    }
-    private void StartGame()
-    {
-        WorldRoom worldRoom = WorldManager.Instance.SpawnRoom(1);
-        PlayerManager.Instance.SpawnPlayer(worldRoom);
-    }
-    private void MockData()
-    {
-        Item axe = ItemGenerator.GenerateItem(ItemType.Axe);
-        PlayerManager.Instance.GiveItemToPlayer(axe);
-        Item hammer = ItemGenerator.GenerateItem(ItemType.Hammer);
-        PlayerManager.Instance.GiveItemToPlayer(hammer);
-
-        EnemyManager.Instance.SpawnEnemy(EnemyType.Skeleton);
+        if (PlayerManager.Instance.GiveItemToPlayer(inventoryItem.Item))
+        {
+            Enemy enemy = InventoryManager.Instance.ActiveLootEnemy;
+            enemy.TakeItem(inventoryItem.Item);
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 
 public class WorldRoom : MonoBehaviour
 {
@@ -22,6 +22,26 @@ public class WorldRoom : MonoBehaviour
         Room = room;
         roomNumberText.text = Room.RoomNumber.ToString();
 
+        SetupEnemies();
+        SetupItems();
+        SetupDoors();
+    }
+
+    private void SetupEnemies()
+    {
+        List<Enemy> roomEnemies = Room.Enemies;
+        for (int i = 0; i < roomEnemies.Count; i++)
+        {
+            Enemy enemy = roomEnemies[i];
+            EnemyManager.Instance.SpawnEnemy(enemy, this, Vector3.right * i);
+        }
+    }
+    private void SetupItems()
+    {
+
+    }
+    private void SetupDoors()
+    {
         int potentialLeftRoomNumber = Room.RoomNumber - 2;
         if (RoomManager.Instance.RoomExists(potentialLeftRoomNumber))
         {
