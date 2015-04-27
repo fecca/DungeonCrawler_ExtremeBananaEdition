@@ -5,7 +5,6 @@ public class WorldManager : Singleton<WorldManager>
     [SerializeField]
     private GameObject roomPrefab = null;
 
-    public WorldRoom CurrentWorldRoom { get; private set; }
     public WorldRoom PreviousWorldRoom { get; private set; }
 
     public WorldRoom SpawnRoom(int roomNumber)
@@ -18,10 +17,9 @@ public class WorldManager : Singleton<WorldManager>
             WorldRoom worldRoom = worldRoomObj.GetComponent<WorldRoom>();
             worldRoom.Initialise(room);
 
-            PreviousWorldRoom = CurrentWorldRoom;
-            CurrentWorldRoom = worldRoom;
-
             DespawnPreviousRoom();
+
+            PreviousWorldRoom = worldRoom;
 
             return worldRoom;
         }

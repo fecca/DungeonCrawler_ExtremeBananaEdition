@@ -15,8 +15,9 @@ public class PlayerInput : MonoBehaviour
             // Enemy enemy = Raycaster.Raycast<Enemy>(layer);
             RaycastHit hit;
             Ray ray = raycastCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, layer))
+            if (Physics.Raycast(ray, out hit))
             {
+                Debug.Log(hit.collider);
                 Collider hitCollider = hit.collider;
 
                 WorldEnemy enemy = hitCollider.GetComponent<WorldEnemy>();
