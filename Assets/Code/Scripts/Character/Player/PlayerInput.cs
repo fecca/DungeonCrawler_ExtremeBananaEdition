@@ -17,11 +17,13 @@ public class PlayerInput : MonoBehaviour
             Ray ray = raycastCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log(hit.collider);
                 Collider hitCollider = hit.collider;
 
                 WorldEnemy enemy = hitCollider.GetComponent<WorldEnemy>();
-                InventoryManager.Instance.ToggleLootWindow(enemy);
+                if (enemy != null)
+                {
+                    InventoryManager.Instance.ToggleLootWindow(enemy);
+                }
             }
         }
     }

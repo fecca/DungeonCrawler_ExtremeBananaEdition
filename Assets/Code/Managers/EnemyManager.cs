@@ -27,4 +27,11 @@ public class EnemyManager : Singleton<EnemyManager>
             return null;
         }
     }
+    public void TakeItem(Enemy enemy, Item item)
+    {
+        if (enemy.TakeItem(item))
+        {
+            InventoryManager.Instance.PopulateLootWindow(enemy.GetItems());
+        }
+    }
 }

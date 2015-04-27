@@ -45,7 +45,7 @@ public class InventoryManager : Singleton<InventoryManager>
         {
             if (enemy != null && enemy.CarriesLoot())
             {
-                PopulateInventoryWindow(enemy.GetItems(), lootSlots);
+                PopulateLootWindow(enemy.GetItems());
                 lootWindow.SetActive(true);
                 ActiveLootEnemy = enemy;
             }
@@ -61,13 +61,17 @@ public class InventoryManager : Singleton<InventoryManager>
     }
     public void PopulatePlayerInventory(List<Item> items)
     {
-        ClearInventory();
-        PopulateInventoryWindow(items, inventorySlots);
+        ClearWindow(inventorySlots);
+        PopulateWindow(items, inventorySlots);
+    }
+    public void PopulateLootWindow(List<Item> items)
+    {
+        ClearWindow(lootSlots);
+        PopulateWindow(items, lootSlots);
     }
 
-    private void PopulateInventoryWindow(List<Item> items, GameObject[] slots)
+    private void PopulateWindow(List<Item> items, GameObject[] slots)
     {
-        /// ToDo: Refactor mess
         for (int i = 0; i < items.Count; i++)
         {
             Item item = items[i];
@@ -83,17 +87,19 @@ public class InventoryManager : Singleton<InventoryManager>
             inventorySlotObj.SetActive(true);
         }
     }
-    private void ClearInventory()
+    private void ClearWindow(GameObject[] slots)
     {
-        for (int i = 0; i < inventorySlots.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
-            GameObject inventorySlotObj = inventorySlots[i];
+            GameObject inventorySlotObj = slots[i];
 
             InventoryItem inventoryItem = inventorySlotObj.GetComponent<InventoryItem>();
             inventoryItem.Item = null;
 
             Image image = inventorySlotObj.GetComponent<Image>();
             image.sprite = null;
+
+            inventorySlotObj.SetActive(false);
         }
     }
 }

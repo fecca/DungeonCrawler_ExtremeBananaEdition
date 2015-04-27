@@ -19,7 +19,7 @@ public class GameManager : Singleton<GameManager>
         if (PlayerManager.Instance.GiveItemToPlayer(inventoryItem.Item))
         {
             Enemy enemy = InventoryManager.Instance.ActiveLootEnemy;
-            enemy.TakeItem(inventoryItem.Item);
+            EnemyManager.Instance.TakeItem(enemy, inventoryItem.Item);
         }
     }
 }
