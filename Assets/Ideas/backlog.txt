@@ -1,0 +1,6 @@
+﻿BACKLOG
+
+Enemy AI
+Player pathfinding
+Interaction range(doors, loot, attack)
+Camera transitions(between rooms)

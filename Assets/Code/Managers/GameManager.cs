@@ -5,27 +5,27 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private Camera perspectiveCamera = null;
     [SerializeField]
-    private Camera ortographicCamera = null;
+    private Camera orthographicCamera = null;
     [SerializeField]
-    private bool ortographic = false;
+    private bool orthographic = false;
 
 
     void Awake()
     {
-        ortographicCamera.gameObject.SetActive(ortographic);
-        perspectiveCamera.gameObject.SetActive(!ortographic);
+        orthographicCamera.gameObject.SetActive(orthographic);
+        perspectiveCamera.gameObject.SetActive(!orthographic);
     }
     void Start()
     {
         RoomManager.Instance.CreateRooms();
         WorldRoom worldRoom = WorldManager.Instance.SpawnRoom(1);
-        PlayerManager.Instance.SpawnPlayer(worldRoom, ortographic);
+        PlayerManager.Instance.SpawnPlayer(worldRoom, orthographic);
     }
 
     public void OpenDoor(Door door)
     {
         WorldRoom newWorldRoom = WorldManager.Instance.SpawnRoom(door.LeadsTo);
-        PlayerManager.Instance.SpawnPlayer(newWorldRoom, ortographic);
+        PlayerManager.Instance.SpawnPlayer(newWorldRoom, orthographic);
     }
     public void LootItem(InventoryItem inventoryItem)
     {
