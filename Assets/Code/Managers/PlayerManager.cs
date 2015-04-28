@@ -21,11 +21,11 @@ public class PlayerManager : Singleton<PlayerManager>
 
             if (ortographicView)
             {
-                playerObj.transform.Rotate(Vector3.up, 45f);
+                playerObj.transform.rotation = Quaternion.Euler(new Vector3(0, 45, 0));
             }
             else
             {
-                playerObj.transform.Rotate(Vector3.up, 0f);
+                playerObj.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             }
 
             if (Player == null)

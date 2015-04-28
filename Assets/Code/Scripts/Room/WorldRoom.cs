@@ -5,7 +5,13 @@ using System.Collections.Generic;
 public class WorldRoom : MonoBehaviour
 {
     [SerializeField]
-    private Text roomNumberText = null;
+    private Text forwardRoomText = null;
+    [SerializeField]
+    private Text backRoomText = null;
+    [SerializeField]
+    private Text leftRoomText = null;
+    [SerializeField]
+    private Text rightRoomText = null;
     [SerializeField]
     private Door leftDoor = null;
     [SerializeField]
@@ -20,7 +26,6 @@ public class WorldRoom : MonoBehaviour
     public void Initialise(Room room)
     {
         Room = room;
-        roomNumberText.text = Room.RoomNumber.ToString();
 
         SetupEnemies();
         SetupItems();
@@ -47,6 +52,11 @@ public class WorldRoom : MonoBehaviour
         {
             leftDoor.LeadsTo = potentialLeftRoomNumber;
             leftDoor.gameObject.SetActive(true);
+            leftRoomText.text = potentialLeftRoomNumber.ToString();
+        }
+        else
+        {
+            leftRoomText.text = "";
         }
 
         int potentialRightRoomNumber = Room.RoomNumber + 3;
@@ -54,6 +64,11 @@ public class WorldRoom : MonoBehaviour
         {
             rightDoor.LeadsTo = potentialRightRoomNumber;
             rightDoor.gameObject.SetActive(true);
+            rightRoomText.text = potentialRightRoomNumber.ToString();
+        }
+        else
+        {
+            rightRoomText.text = "";
         }
 
         int potentialForwardRoomNumber = Room.RoomNumber + 5;
@@ -61,6 +76,11 @@ public class WorldRoom : MonoBehaviour
         {
             forwardDoor.LeadsTo = potentialForwardRoomNumber;
             forwardDoor.gameObject.SetActive(true);
+            forwardRoomText.text = potentialForwardRoomNumber.ToString();
+        }
+        else
+        {
+            forwardRoomText.text = "";
         }
 
         int potentialBackRoomNumber = Room.RoomNumber - 7;
@@ -68,6 +88,11 @@ public class WorldRoom : MonoBehaviour
         {
             backDoor.LeadsTo = potentialBackRoomNumber;
             backDoor.gameObject.SetActive(true);
+            backRoomText.text = potentialBackRoomNumber.ToString();
+        }
+        else
+        {
+            backRoomText.text = "";
         }
     }
 }
