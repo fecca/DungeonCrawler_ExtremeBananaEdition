@@ -8,7 +8,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public Player Player { get; private set; }
 
-    public void SpawnPlayer(WorldRoom worldRoom)
+    public void SpawnPlayer(WorldRoom worldRoom, bool ortographicView)
     {
         if (worldRoom != null)
         {
@@ -17,8 +17,16 @@ public class PlayerManager : Singleton<PlayerManager>
             {
                 playerObj = Instantiate(playerPrefab) as GameObject;
             }
-
             playerObj.transform.position = worldRoom.transform.position + Vector3.up;
+
+            if (ortographicView)
+            {
+                playerObj.transform.Rotate(Vector3.up, 45f);
+            }
+            else
+            {
+                playerObj.transform.Rotate(Vector3.up, 0f);
+            }
 
             if (Player == null)
             {

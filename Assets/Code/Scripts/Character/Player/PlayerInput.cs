@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField]
-    private Camera raycastCamera = null;
-    [SerializeField]
-    private LayerMask layer = 0;
+    private Camera raycastCamera;
+
+    void Start()
+    {
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            Debug.LogWarning("No main camera in scene.");
+        }
+        raycastCamera = mainCamera;
+    }
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             // Enemy enemy = Raycaster.Raycast<Enemy>(layer);
             RaycastHit hit;
@@ -18,12 +26,8 @@ public class PlayerInput : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 Collider hitCollider = hit.collider;
-
                 WorldEnemy enemy = hitCollider.GetComponent<WorldEnemy>();
-                if (enemy != null)
-                {
-                    InventoryManager.Instance.ToggleLootWindow(enemy);
-                }
+                InventoryManager.Instance.ToggleLootWindow(enemy);
             }
         }
     }
