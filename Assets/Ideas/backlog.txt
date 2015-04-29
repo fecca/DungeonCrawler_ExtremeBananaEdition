@@ -4,3 +4,11 @@ Enemy AI
 Player pathfinding
 Interaction range(doors, loot, attack)
 Camera transitions(between rooms)
+Item tooltip
+Player attack
+Player jump
+
+
+DONE
+
+Player controller

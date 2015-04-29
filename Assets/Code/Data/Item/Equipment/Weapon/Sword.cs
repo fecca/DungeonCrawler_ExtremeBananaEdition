@@ -3,5 +3,6 @@
     public Sword()
     {
         Type = ItemType.Sword;
+        Description = "A sword with Zing!";
     }
 }
