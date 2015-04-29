@@ -9,8 +9,6 @@ public class InventoryManager : Singleton<InventoryManager>
     [SerializeField]
     private GameObject lootWindow = null;
     [SerializeField]
-    private GameObject tooltip = null;
-    [SerializeField]
     private GameObject[] inventorySlots = null;
     [SerializeField]
     private GameObject[] lootSlots = null;
@@ -37,7 +35,6 @@ public class InventoryManager : Singleton<InventoryManager>
             enemy = worldEnemy.Enemy;
         }
 
-        // Always close the loot window
         if (lootWindow.activeInHierarchy)
         {
             lootWindow.SetActive(false);
@@ -61,6 +58,11 @@ public class InventoryManager : Singleton<InventoryManager>
             ActiveLootEnemy = null;
         }
     }
+    public void HideWindows()
+    {
+        lootWindow.SetActive(false);
+        inventoryWindow.SetActive(false);
+    }
     public void PopulatePlayerInventory(List<Item> items)
     {
         ClearWindow(inventorySlots);
@@ -70,17 +72,6 @@ public class InventoryManager : Singleton<InventoryManager>
     {
         ClearWindow(lootSlots);
         PopulateWindow(items, lootSlots);
-    }
-    public void ShowTooltip(InventoryItem inventoryItem)
-    {
-        /// ToDo: mess
-        tooltip.SetActive(true);
-        tooltip.GetComponentInChildren<Text>().text = inventoryItem.Item.Description;
-        tooltip.transform.position = inventoryItem.transform.position + new Vector3(-32, 42, 0);
-    }
-    public void HideTooltip()
-    {
-        tooltip.SetActive(false);
     }
 
     private void PopulateWindow(List<Item> items, GameObject[] slots)

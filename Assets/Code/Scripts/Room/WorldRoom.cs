@@ -5,21 +5,13 @@ using System.Collections.Generic;
 public class WorldRoom : MonoBehaviour
 {
     [SerializeField]
-    private Text forwardRoomText = null;
+    private WorldRoomInformation forwardInfo = new WorldRoomInformation();
     [SerializeField]
-    private Text backRoomText = null;
+    private WorldRoomInformation backInfo = new WorldRoomInformation();
     [SerializeField]
-    private Text leftRoomText = null;
+    private WorldRoomInformation leftInfo = new WorldRoomInformation();
     [SerializeField]
-    private Text rightRoomText = null;
-    [SerializeField]
-    private Door leftDoor = null;
-    [SerializeField]
-    private Door rightDoor = null;
-    [SerializeField]
-    private Door forwardDoor = null;
-    [SerializeField]
-    private Door backDoor = null;
+    private WorldRoomInformation rightInfo = new WorldRoomInformation();
 
     public Room Room { get; private set; }
 
@@ -30,6 +22,27 @@ public class WorldRoom : MonoBehaviour
         SetupEnemies();
         SetupItems();
         SetupDoors();
+    }
+    public Transform GetSpawnPoint(Door door)
+    {
+        if (door == null)
+        {
+            return transform;
+        }
+
+        switch (door.DoorType)
+        {
+            case DoorType.Forward:
+                return backInfo.SpawnPoint;
+            case DoorType.Back:
+                return forwardInfo.SpawnPoint;
+            case DoorType.Left:
+                return rightInfo.SpawnPoint;
+            case DoorType.Right:
+                return leftInfo.SpawnPoint;
+            default:
+                return transform;
+        }
     }
 
     private void SetupEnemies()
@@ -47,52 +60,52 @@ public class WorldRoom : MonoBehaviour
     }
     private void SetupDoors()
     {
-        int potentialLeftRoomNumber = Room.RoomNumber - 2;
-        if (RoomManager.Instance.RoomExists(potentialLeftRoomNumber))
-        {
-            leftDoor.LeadsTo = potentialLeftRoomNumber;
-            leftDoor.gameObject.SetActive(true);
-            leftRoomText.text = potentialLeftRoomNumber.ToString();
-        }
-        else
-        {
-            leftRoomText.text = "";
-        }
-
-        int potentialRightRoomNumber = Room.RoomNumber + 3;
-        if (RoomManager.Instance.RoomExists(potentialRightRoomNumber))
-        {
-            rightDoor.LeadsTo = potentialRightRoomNumber;
-            rightDoor.gameObject.SetActive(true);
-            rightRoomText.text = potentialRightRoomNumber.ToString();
-        }
-        else
-        {
-            rightRoomText.text = "";
-        }
-
         int potentialForwardRoomNumber = Room.RoomNumber + 5;
         if (RoomManager.Instance.RoomExists(potentialForwardRoomNumber))
         {
-            forwardDoor.LeadsTo = potentialForwardRoomNumber;
-            forwardDoor.gameObject.SetActive(true);
-            forwardRoomText.text = potentialForwardRoomNumber.ToString();
+            forwardInfo.Door.LeadsTo = potentialForwardRoomNumber;
+            forwardInfo.Door.gameObject.SetActive(true);
+            forwardInfo.Text.text = potentialForwardRoomNumber.ToString();
         }
         else
         {
-            forwardRoomText.text = "";
+            forwardInfo.Text.text = "";
         }
 
         int potentialBackRoomNumber = Room.RoomNumber - 7;
         if (RoomManager.Instance.RoomExists(potentialBackRoomNumber))
         {
-            backDoor.LeadsTo = potentialBackRoomNumber;
-            backDoor.gameObject.SetActive(true);
-            backRoomText.text = potentialBackRoomNumber.ToString();
+            backInfo.Door.LeadsTo = potentialBackRoomNumber;
+            backInfo.Door.gameObject.SetActive(true);
+            backInfo.Text.text = potentialBackRoomNumber.ToString();
         }
         else
         {
-            backRoomText.text = "";
+            backInfo.Text.text = "";
+        }
+
+        int potentialLeftRoomNumber = Room.RoomNumber - 2;
+        if (RoomManager.Instance.RoomExists(potentialLeftRoomNumber))
+        {
+            leftInfo.Door.LeadsTo = potentialLeftRoomNumber;
+            leftInfo.Door.gameObject.SetActive(true);
+            leftInfo.Text.text = potentialLeftRoomNumber.ToString();
+        }
+        else
+        {
+            leftInfo.Text.text = "";
+        }
+
+        int potentialRightRoomNumber = Room.RoomNumber + 3;
+        if (RoomManager.Instance.RoomExists(potentialRightRoomNumber))
+        {
+            rightInfo.Door.LeadsTo = potentialRightRoomNumber;
+            rightInfo.Door.gameObject.SetActive(true);
+            rightInfo.Text.text = potentialRightRoomNumber.ToString();
+        }
+        else
+        {
+            rightInfo.Text.text = "";
         }
     }
 }
